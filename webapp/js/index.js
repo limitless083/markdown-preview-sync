@@ -23,23 +23,8 @@ $(function () {
     };
 
     var highlight_code = function () {
-        var marker = '<a href="#" id="_6d61726b646f776e2d707265766965772d73796e63"></a>';
-        $('code[class^=language]').each(function (i, e) {
-            var cls = $(e).attr('class');
-            var language = cls.substring(cls.indexOf('-') + 1);
-            console.log(language);
-
-            var codes = $(e).html().split('\n');
-            $.each(codes, function (i, e) {
-                var mark_idx = e.lastIndexOf('<a');
-                if (mark_idx <= -1) {
-                    codes[i] = hljs.highlight(language, e).value;
-                } else {
-                    console.log(hljs.highlight(language, e.substring(0, mark_idx)).value);
-                    codes[i] += hljs.highlight(language, e.substring(0, mark_idx)).value + marker;
-                }
-            });
-            $(e).html(codes.join('\n'));
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
         });
     };
 
