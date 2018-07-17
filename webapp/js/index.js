@@ -3,6 +3,7 @@ $(function () {
 
     var init = function (data) {
         $('#path').val(data.path);
+        $('title').html(data.path);
         $('.markdown-body').html(data.content);
         highlight_code();
         scroll_if_possible();
@@ -10,6 +11,7 @@ $(function () {
     };
 
     var sync = function (data) {
+        $('title').html(data.path);
         $('.markdown-body').html(data.content);
         highlight_code();
         scroll_if_possible();
