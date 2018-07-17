@@ -17,7 +17,6 @@ public class WebSocketMsg {
     @Override
     public String toString() {
         return "WebSocketMsg[command=" + command +
-            ", path=" + path +
-            ", content=" + content;
+            ", path=" + path;
     }
 }
