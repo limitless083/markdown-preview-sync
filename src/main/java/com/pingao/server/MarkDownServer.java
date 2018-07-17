@@ -59,7 +59,6 @@ public class MarkDownServer {
         channelGroup.close();
         group.shutdownGracefully();
         LOGGER.info("Server shutdown success");
-        System.exit(0);
     }
 
     public boolean isRunning() {
