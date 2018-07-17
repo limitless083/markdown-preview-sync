@@ -17,15 +17,29 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
+import java.util.List;
 
 
 public class MarkDownServer {
     private static final Logger LOGGER = LoggerFactory.getLogger(MarkDownServer.class);
+
+    private static MarkDownServer INSTANCE;
+
     private final ChannelGroup channelGroup =
         new DefaultChannelGroup(ImmediateEventExecutor.INSTANCE);
     private final EventLoopGroup group = new NioEventLoopGroup();
     private Channel channel;
     private boolean isRunning;
+
+    public static MarkDownServer getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new MarkDownServer();
+        }
+        return INSTANCE;
+    }
+
+    private MarkDownServer() {
+    }
 
     public ChannelFuture start(int port) {
         ServerBootstrap bootstrap = new ServerBootstrap();
@@ -56,10 +70,10 @@ public class MarkDownServer {
         channelGroup.add(channel);
     }
 
-    public void broadcast(String command, String path, String content, int bottom) {
+    public void broadcast(String command, String path, List<String> content, int bottom) {
         WebSocketMsg msg = new WebSocketMsg(command, path, HtmlUtils.markdown2Html(content, bottom));
-        channelGroup.writeAndFlush(new TextWebSocketFrame(new Gson().toJson(msg)));
-        LOGGER.info("Broadcast WebSocket msg {} success", msg);
+        channelGroup.writeAndFlush(new TextWebSocketFrame(HtmlUtils.base64(new Gson().toJson(msg))));
+        LOGGER.info("Broadcast bottom {} msg {} success", bottom, msg);
     }
 
     public static void main(String[] args) {

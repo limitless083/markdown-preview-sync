@@ -6,12 +6,14 @@ $(function () {
         $('.markdown-body').html(data.content);
         highlight_code();
         scroll_if_possible();
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub])
     };
 
     var sync = function (data) {
         $('.markdown-body').html(data.content);
         highlight_code();
         scroll_if_possible();
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub])
     };
 
     var close = function () {
@@ -67,8 +69,8 @@ $(function () {
         };
 
         ws.onmessage = function (d) {
-            console.log('Response length: ' + d.data);
-            var data = JSON.parse(d.data);
+            console.log('Response length: ' + d.data.length);
+            var data = JSON.parse(Base64.decode(d.data));
             if ($('#path').val() === '') {
                 init(data);
             } else {

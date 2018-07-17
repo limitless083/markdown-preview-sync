@@ -14,10 +14,7 @@ public class Main {
     public static void main(String[] args) {
         GatewayServer gatewayServer = new GatewayServer();
         gatewayServer.start();
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            gatewayServer.shutdown();
-            System.exit(0);
-        }));
+        Runtime.getRuntime().addShutdownHook(new Thread(gatewayServer::shutdown));
         LOGGER.info("Gateway server start success");
     }
 }
