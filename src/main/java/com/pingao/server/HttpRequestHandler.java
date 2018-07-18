@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -49,6 +50,7 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
             response(ctx, request, new String(Files.readAllBytes(Paths.get(path))),
                      HtmlUtils.getMiMeTypeOfStaticFile(path));
         } catch (IOException e) {
+            LOGGER.error("Error occurs on response static file {}", path, e);
             error(ctx, HttpResponseStatus.NOT_FOUND);
         }
     }
@@ -65,19 +67,27 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
         if (HttpUtil.is100ContinueExpected(request)) {
             send100Continue(ctx);
         }
-        FullHttpResponse response1 =
-            new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(content.getBytes()));
-        response1.headers().set(HttpHeaderNames.CONTENT_TYPE, type.getType() + "; charset=UTF-8");
-        response1.headers().set(HttpHeaderNames.CONTENT_LENGTH, response1.content().readableBytes());
-        boolean keepAlive = HttpUtil.isKeepAlive(request);
-        if (keepAlive) {
-            response1.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
+
+        try {
+            byte[] bytes = content.getBytes("UTF-8");
+            FullHttpResponse response1 =
+                new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(bytes));
+            response1.headers().set(HttpHeaderNames.CONTENT_TYPE, type.getType() + "; charset=UTF-8");
+            response1.headers().set(HttpHeaderNames.CONTENT_LENGTH, response1.content().readableBytes());
+            boolean keepAlive = HttpUtil.isKeepAlive(request);
+            if (keepAlive) {
+                response1.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
+            }
+            ctx.write(response1);
+            ChannelFuture future = ctx.writeAndFlush(LastHttpContent.EMPTY_LAST_CONTENT);
+            if (!keepAlive) {
+                future.addListener(ChannelFutureListener.CLOSE);
+            }
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.error("Error occurs on response content {}", content, e);
+            error(ctx, HttpResponseStatus.NOT_FOUND);
         }
-        ctx.write(response1);
-        ChannelFuture future = ctx.writeAndFlush(LastHttpContent.EMPTY_LAST_CONTENT);
-        if (!keepAlive) {
-            future.addListener(ChannelFutureListener.CLOSE);
-        }
+
     }
 
     private static void send100Continue(ChannelHandlerContext ctx) {
