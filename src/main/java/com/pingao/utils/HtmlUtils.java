@@ -1,5 +1,6 @@
 package com.pingao.utils;
 
+import com.pingao.Main;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.QueryStringDecoder;
 import org.commonmark.node.Node;
@@ -26,7 +27,6 @@ import java.util.Map;
 public class HtmlUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(HtmlUtils.class);
 
-    public static final String INDEX_PATH = System.getProperty("user.dir") + "/webapp";
     // Hex of "markdown-preview-sync"
     private static final String MARKER = "6d61726b646f776e2d707265766965772d73796e63";
 
@@ -277,20 +277,10 @@ public class HtmlUtils {
         }
     }
 
-    public static String buildIndexHtml(int port) {
+    public static String buildIndexHtml() {
         try {
-            List<String> lines = Files.readAllLines(Paths.get(INDEX_PATH + "/index.html"), Charset.forName("UTF-8"));
-            StringBuilder sb = new StringBuilder();
-            for (String line : lines) {
-                if (line.contains("${port}")) {
-                    sb.append(line.replace("${port}", String.valueOf(port))).append('\n');
-                } else {
-                    sb.append(line).append('\n');
-                }
-            }
-
-            return sb.toString();
-            //
+            return new String(Files.readAllBytes(Paths.get(Main.ROOT_PATH + "/index.html")),
+                Charset.forName("UTF-8"));
         } catch (Exception e) {
             LOGGER.error("Error occurs on building index html", e);
         }
@@ -387,6 +377,10 @@ public class HtmlUtils {
         //System.out.println(HtmlUtils.buildContentLines("    \naaa"));
         //System.out.println(HtmlUtils.buildContentLines("    \naaa\nbb"));
         //System.out.println(HtmlUtils.buildContentLines("    \naaa\n\nbb"));
-        System.out.println(HtmlUtils.markdown2Html(HtmlUtils.buildContentLines(HtmlUtils.TEST_MD_LONG), 22));
+        //System.out.println(HtmlUtils.markdown2Html(HtmlUtils.buildContentLines(HtmlUtils.TEST_MD_LONG), 22));
+        //System.out.println(Paths.get(ClassLoader.getSystemResource("").getFile()).getParent().toString());
+        System.out.println(ClassLoader.getSystemResource("").getPath().substring(1));
+        System.out.println(HtmlUtils.class.getResource("."));
+        System.out.println(Main.ROOT_PATH);
     }
 }

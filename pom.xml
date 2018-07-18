@@ -70,6 +70,16 @@
                                     <mainClass>com.pingao.Main</mainClass>
                                 </transformer>
                             </transformers>
+                            <filters>
+                                <filter>
+                                    <artifact>com.pingao:*</artifact>
+                                    <excludes>
+                                        <exclude>js/</exclude>
+                                        <exclude>css/</exclude>
+                                        <exclude>index.html</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
                         </configuration>
                     </execution>
                 </executions>
@@ -86,16 +96,16 @@
                     <execution>
                         <id>copy-resources</id>
                         <!-- here the phase you need -->
-                        <phase>compile</phase>
+                        <phase>process-sources</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target/webapp</outputDirectory>
+                            <outputDirectory>${basedir}/target/classes</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>webapp</directory>
-                                    <filtering>true</filtering>
+                                    <directory>${basedir}/src/main/webapp</directory>
+                                    <filtering>false</filtering>
                                 </resource>
                             </resources>
                         </configuration>
@@ -128,10 +138,10 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/autoload/webapp</outputDirectory>
+                            <outputDirectory>${basedir}/autoload/java</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${basedir}/target/webapp</directory>
+                                    <directory>${basedir}/src/main/webapp</directory>
                                     <filtering>false</filtering>
                                 </resource>
                             </resources>

@@ -7,14 +7,14 @@ $(function () {
         $('.markdown-body').html(data.content);
         highlight_code();
         scroll_if_possible();
-        MathJax.Hub.Queue(["Typeset",MathJax.Hub])
+        MathJax.Hub.Queue(['Typeset', MathJax.Hub])
     };
 
     var sync = function (data) {
         $('.markdown-body').html(data.content);
         highlight_code();
         scroll_if_possible();
-        MathJax.Hub.Queue(["Typeset",MathJax.Hub])
+        MathJax.Hub.Queue(['Typeset', MathJax.Hub])
     };
 
     var close = function () {
@@ -24,7 +24,7 @@ $(function () {
     };
 
     var highlight_code = function () {
-        $('pre code').each(function(i, block) {
+        $('pre code').each(function (i, block) {
             hljs.highlightBlock(block);
         });
     };
@@ -36,7 +36,7 @@ $(function () {
         }
     };
 
-    var url = 'ws://127.0.0.1:7788/ws';
+    var url = 'ws://127.0.0.1:' + window.location.port + '/ws';
     if (!WebSocket) {
         console.warn('WebSocket is not support');
     } else {
@@ -75,7 +75,7 @@ $(function () {
         if (ws !== null) {
             ws.send(line);
         } else {
-            console.warn("WebSocket is close");
+            console.warn('WebSocket is close');
         }
     };
 });

@@ -1,5 +1,6 @@
 package com.pingao.server;
 
+import com.pingao.Main;
 import com.pingao.utils.HtmlUtils;
 import com.pingao.utils.MiMeType;
 import io.netty.buffer.Unpooled;
@@ -39,11 +40,11 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
     }
 
     private void index(ChannelHandlerContext ctx, FullHttpRequest request) {
-        response(ctx, request, HtmlUtils.buildIndexHtml(7788), MiMeType.HTML);
+        response(ctx, request, HtmlUtils.buildIndexHtml(), MiMeType.HTML);
     }
 
     private void responseStaticFile(ChannelHandlerContext ctx, FullHttpRequest request) {
-        String path = HtmlUtils.INDEX_PATH + HtmlUtils.getRequestPath(request.uri());
+        String path = Main.ROOT_PATH + HtmlUtils.getRequestPath(request.uri());
         try {
             response(ctx, request, new String(Files.readAllBytes(Paths.get(path))),
                      HtmlUtils.getMiMeTypeOfStaticFile(path));
