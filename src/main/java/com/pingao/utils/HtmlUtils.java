@@ -34,7 +34,7 @@ public class HtmlUtils {
     private static final HtmlRenderer RENDERER = HtmlRenderer.builder().extensions(EXTENSIONS).build();
 
     // Hex of "markdown-preview-sync"
-    private static final String MARKER = "_markdown_preview_sync_marker";
+    private static final String MARKER = "_markdown_preview_sync_bottom_marker";
 
     public static final String TEST_MD = "---\n"
                                          + "title: 统计中的p值\n"

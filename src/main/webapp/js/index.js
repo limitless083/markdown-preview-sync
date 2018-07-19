@@ -30,7 +30,7 @@ $(function () {
     };
 
     var scroll_if_possible = function () {
-        var marker = document.getElementById('_markdown_preview_sync_marker');
+        var marker = document.getElementById('_markdown_preview_sync_bottom_marker');
         if (marker !== null) {
             marker.scrollIntoView(false);
         }
