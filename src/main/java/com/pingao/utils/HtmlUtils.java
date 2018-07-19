@@ -1,8 +1,10 @@
 package com.pingao.utils;
 
-import com.pingao.Main;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.QueryStringDecoder;
+import org.commonmark.Extension;
+import org.commonmark.ext.front.matter.YamlFrontMatterExtension;
+import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
@@ -13,6 +15,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,6 +26,11 @@ import java.util.stream.Collectors;
  */
 public class HtmlUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(HtmlUtils.class);
+
+    private static final List<Extension> EXTENSIONS =
+        Arrays.asList(TablesExtension.create(), YamlFrontMatterExtension.create());
+    private static final Parser PARSER = Parser.builder().extensions(EXTENSIONS).build();
+    private static final HtmlRenderer RENDERER = HtmlRenderer.builder().extensions(EXTENSIONS).build();
 
     // Hex of "markdown-preview-sync"
     private static final String MARKER = "6d61726b646f776e2d707265766965772d73796e63";
@@ -311,10 +319,8 @@ public class HtmlUtils {
             }
         }
 
-        Parser parser = Parser.builder().build();
-        Node document = parser.parse(sb.toString());
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
-        return renderer.render(document).replace(MARKER, "<a href='#' id='_" + MARKER + "'></a>");
+        Node document = PARSER.parse(sb.toString());
+        return RENDERER.render(document).replace(MARKER, "<a href='#' id='_" + MARKER + "'></a>");
     }
 
     public static List<String> buildContentLines(String content) {
@@ -340,29 +346,5 @@ public class HtmlUtils {
             }
         }
         return lines;
-    }
-
-    public static void main(String[] args) {
-        //System.out.println("aa".substring(0, 0).equals(""));
-        //System.out.println(HtmlUtils.markdown2Html(Arrays.asList("", "", "  ", ""), 3));
-        //System.out.println(HtmlUtils.markdown2Html(Arrays.asList("aaa", "", "  ", "bbb"), 3));
-        //System.out.println(HtmlUtils.markdown2Html(Arrays.asList("aaa", "", "  ", ""), 5));
-        //System.out.println(HtmlUtils.buildContentLines(""));
-        //System.out.println(HtmlUtils.buildContentLines("\n"));
-        //System.out.println(HtmlUtils.buildContentLines("    \n"));
-        //System.out.println(HtmlUtils.buildContentLines("    \n\n"));
-        //System.out.println(HtmlUtils.buildContentLines("    \naaa"));
-        //System.out.println(HtmlUtils.buildContentLines("    \naaa\nbb"));
-        //System.out.println(HtmlUtils.buildContentLines("    \naaa\n\nbb"));
-        //System.out.println(HtmlUtils.buildIndexHtml());
-        //System.out.println(HtmlUtils.markdown2Html(HtmlUtils.buildContentLines(HtmlUtils.TEST_MD_LONG), 22));
-        //System.out.println(Paths.get(ClassLoader.getSystemResource("").getFile()).getParent().toString());
-        //System.out.println(ClassLoader.getSystemResource("").getPath().substring(1));
-        //System.out.println(HtmlUtils.class.getResource("."));
-        //System.out.println(Main.ROOT_PATH);
-        //System.out.println(new Gson().toJson(new WebSocketMsg("command", "d:/path", "<a href='aaa'></a>")));
-        //System.out.println(new GsonBuilder().disableHtmlEscaping().create().toJson(new WebSocketMsg("command", "d:/path", "<a href='aaa'></a>")));
-        //System.out.println(Charset.defaultCharset());
-        System.out.println(readContentAsString(Main.ROOT_PATH + "/webapp/index.html"));
     }
 }
