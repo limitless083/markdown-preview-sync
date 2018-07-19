@@ -33,8 +33,9 @@ public class HtmlUtils {
     private static final Parser PARSER = Parser.builder().extensions(EXTENSIONS).build();
     private static final HtmlRenderer RENDERER = HtmlRenderer.builder().extensions(EXTENSIONS).build();
 
-    // Hex of "markdown-preview-sync"
     private static final String MARKER = "_markdown_preview_sync_bottom_marker";
+
+    private static final String MARKER_HTML = "<a href='#' id='" + MARKER + "'></a>";
 
     public static final String TEST_MD = "---\n"
                                          + "title: 统计中的p值\n"
@@ -320,7 +321,9 @@ public class HtmlUtils {
         }
 
         Node document = PARSER.parse(sb.toString());
-        return RENDERER.render(document).replace(MARKER, "<a href='#' id='" + MARKER + "'></a>");
+        String html = RENDERER.render(document);
+        int index = html.indexOf(MARKER);
+        return html.substring(0, index) + MARKER_HTML + html.substring(index + MARKER.length());
     }
 
     public static List<String> buildContentLines(String content) {
