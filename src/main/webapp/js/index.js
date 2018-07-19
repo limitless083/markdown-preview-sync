@@ -30,7 +30,7 @@ $(function () {
     };
 
     var scroll_if_possible = function () {
-        var marker = document.getElementById('_6d61726b646f776e2d707265766965772d73796e63');
+        var marker = document.getElementById('_markdown_preview_sync_marker');
         if (marker !== null) {
             marker.scrollIntoView(false);
         }

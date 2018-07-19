@@ -1,5 +1,6 @@
 package com.pingao.utils;
 
+import com.pingao.enums.MiMeType;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.QueryStringDecoder;
 import org.commonmark.Extension;
@@ -33,7 +34,7 @@ public class HtmlUtils {
     private static final HtmlRenderer RENDERER = HtmlRenderer.builder().extensions(EXTENSIONS).build();
 
     // Hex of "markdown-preview-sync"
-    private static final String MARKER = "6d61726b646f776e2d707265766965772d73796e63";
+    private static final String MARKER = "_markdown_preview_sync_marker";
 
     public static final String TEST_MD = "---\n"
                                          + "title: 统计中的p值\n"
@@ -304,8 +305,7 @@ public class HtmlUtils {
                     if ("".equals(line.trim())
                         || line.trim().startsWith("<!--")
                         || line.trim().startsWith("```")
-                        || line.trim().startsWith("$$")
-                        ) {
+                        || line.trim().startsWith("$$")) {
                         bottom++;
                     } else {
                         sb.append(MARKER);
@@ -320,7 +320,7 @@ public class HtmlUtils {
         }
 
         Node document = PARSER.parse(sb.toString());
-        return RENDERER.render(document).replace(MARKER, "<a href='#' id='_" + MARKER + "'></a>");
+        return RENDERER.render(document).replace(MARKER, "<a href='#' id='" + MARKER + "'></a>");
     }
 
     public static List<String> buildContentLines(String content) {
