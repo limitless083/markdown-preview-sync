@@ -38,14 +38,14 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
     }
 
     private void index(ChannelHandlerContext ctx, FullHttpRequest request) {
-        response(ctx, request, HtmlUtils.readContentAsString(Main.ROOT_PATH + "/index.html"), MiMeType.HTML);
+        response(ctx, request, HtmlUtils.readContentAsString(Main.ROOT_PATH + "/webapp/index.html"), MiMeType.HTML);
     }
 
     private void responseStaticFile(ChannelHandlerContext ctx, FullHttpRequest request) {
-        String path = Main.ROOT_PATH + HtmlUtils.getRequestPath(request.uri());
+        String path = Main.ROOT_PATH + "/webapp" + HtmlUtils.getRequestPath(request.uri());
         try {
             response(ctx, request, HtmlUtils.readContentAsString(path),
-                     HtmlUtils.getMiMeTypeOfStaticFile(path));
+                HtmlUtils.getMiMeTypeOfStaticFile(path));
         } catch (Exception e) {
             LOGGER.error("Error occurs on response static file {}", path, e);
             error(ctx, HttpResponseStatus.NOT_FOUND);
@@ -84,7 +84,6 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
             LOGGER.error("Error occurs on response content {}", content, e);
             error(ctx, HttpResponseStatus.NOT_FOUND);
         }
-
     }
 
     private static void send100Continue(ChannelHandlerContext ctx) {

@@ -363,6 +363,6 @@ public class HtmlUtils {
         //System.out.println(new Gson().toJson(new WebSocketMsg("command", "d:/path", "<a href='aaa'></a>")));
         //System.out.println(new GsonBuilder().disableHtmlEscaping().create().toJson(new WebSocketMsg("command", "d:/path", "<a href='aaa'></a>")));
         //System.out.println(Charset.defaultCharset());
-        System.out.println(readContentAsString(Main.ROOT_PATH + "/index.html"));
+        System.out.println(readContentAsString(Main.ROOT_PATH + "/webapp/index.html"));
     }
 }

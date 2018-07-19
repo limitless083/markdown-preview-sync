@@ -23,6 +23,16 @@
         <finalName>${project.artifactId}</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
         <defaultGoal>package</defaultGoal>
+        <resources>
+            <resource>
+                <directory>src/main</directory>
+                <includes>
+                    <include>**/*.html</include>
+                    <include>**/*.css</include>
+                    <include>**/*.js</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
@@ -62,9 +72,7 @@
                                 <filter>
                                     <artifact>com.pingao:*</artifact>
                                     <excludes>
-                                        <exclude>js/</exclude>
-                                        <exclude>css/</exclude>
-                                        <exclude>index.html</exclude>
+                                        <exclude>webapp/</exclude>
                                     </excludes>
                                 </filter>
                             </filters>
@@ -109,7 +117,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/autoload/java</outputDirectory>
+                            <outputDirectory>${basedir}/autoload/java/webapp</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${basedir}/src/main/webapp</directory>
@@ -156,7 +164,6 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.21</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/net.sf.py4j/py4j -->
         <dependency>
             <groupId>net.sf.py4j</groupId>
             <artifactId>py4j</artifactId>
