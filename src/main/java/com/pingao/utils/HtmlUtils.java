@@ -274,10 +274,6 @@ public class HtmlUtils {
         }
     }
 
-    public static String buildIndexHtml() {
-        return readContentAsString(Main.ROOT_PATH + "/index.html");
-    }
-
     public static String readContentAsString(String path) {
         try {
             return Files.lines(Paths.get(path), Charset.forName("UTF-8")).collect(Collectors.joining("\n"));

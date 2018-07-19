@@ -38,7 +38,7 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
     }
 
     private void index(ChannelHandlerContext ctx, FullHttpRequest request) {
-        response(ctx, request, HtmlUtils.buildIndexHtml(), MiMeType.HTML);
+        response(ctx, request, HtmlUtils.readContentAsString(Main.ROOT_PATH + "/index.html"), MiMeType.HTML);
     }
 
     private void responseStaticFile(ChannelHandlerContext ctx, FullHttpRequest request) {

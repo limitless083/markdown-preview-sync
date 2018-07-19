@@ -23,11 +23,6 @@
         <finalName>${project.artifactId}</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
         <defaultGoal>package</defaultGoal>
-        <resources>
-            <resource>
-                <directory>src/main/webapp</directory>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
