@@ -4,10 +4,7 @@ import com.pingao.Main;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.QueryStringDecoder;
 import org.commonmark.node.Node;
-import org.commonmark.node.StrongEmphasis;
-import org.commonmark.node.Text;
 import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.AttributeProvider;
 import org.commonmark.renderer.html.HtmlRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +13,9 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 /**
@@ -278,11 +275,14 @@ public class HtmlUtils {
     }
 
     public static String buildIndexHtml() {
+        return readContentAsString(Main.ROOT_PATH + "/index.html");
+    }
+
+    public static String readContentAsString(String path) {
         try {
-            return new String(Files.readAllBytes(Paths.get(Main.ROOT_PATH + "/index.html")),
-                Charset.forName("UTF-8"));
+            return Files.lines(Paths.get(path), Charset.forName("UTF-8")).collect(Collectors.joining("\n"));
         } catch (Exception e) {
-            LOGGER.error("Error occurs on building index html", e);
+            LOGGER.error("Error occurs on reading content of {}", path, e);
         }
         return "";
     }
@@ -346,25 +346,6 @@ public class HtmlUtils {
         return lines;
     }
 
-    public static String base64(String s) {
-        return Base64.getEncoder().encodeToString(s.getBytes(Charset.forName("UTF-8")));
-    }
-
-    private static class LinkAttributeProvider implements AttributeProvider {
-        @Override
-        public void setAttributes(Node node, String tagName, Map<String, String> attributes) {
-            if (node instanceof StrongEmphasis) {
-                Node child = node.getFirstChild();
-                if (child instanceof Text) {
-                    Text text = (Text) child;
-                    if (MARKER.equals(text.getLiteral())) {
-                        attributes.put("id", '_' + MARKER);
-                    }
-                }
-            }
-        }
-    }
-
     public static void main(String[] args) {
         //System.out.println("aa".substring(0, 0).equals(""));
         //System.out.println(HtmlUtils.markdown2Html(Arrays.asList("", "", "  ", ""), 3));
@@ -377,10 +358,15 @@ public class HtmlUtils {
         //System.out.println(HtmlUtils.buildContentLines("    \naaa"));
         //System.out.println(HtmlUtils.buildContentLines("    \naaa\nbb"));
         //System.out.println(HtmlUtils.buildContentLines("    \naaa\n\nbb"));
+        //System.out.println(HtmlUtils.buildIndexHtml());
         //System.out.println(HtmlUtils.markdown2Html(HtmlUtils.buildContentLines(HtmlUtils.TEST_MD_LONG), 22));
         //System.out.println(Paths.get(ClassLoader.getSystemResource("").getFile()).getParent().toString());
-        System.out.println(ClassLoader.getSystemResource("").getPath().substring(1));
-        System.out.println(HtmlUtils.class.getResource("."));
-        System.out.println(Main.ROOT_PATH);
+        //System.out.println(ClassLoader.getSystemResource("").getPath().substring(1));
+        //System.out.println(HtmlUtils.class.getResource("."));
+        //System.out.println(Main.ROOT_PATH);
+        //System.out.println(new Gson().toJson(new WebSocketMsg("command", "d:/path", "<a href='aaa'></a>")));
+        //System.out.println(new GsonBuilder().disableHtmlEscaping().create().toJson(new WebSocketMsg("command", "d:/path", "<a href='aaa'></a>")));
+        //System.out.println(Charset.defaultCharset());
+        System.out.println(readContentAsString(Main.ROOT_PATH + "/index.html"));
     }
 }

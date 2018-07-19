@@ -28,7 +28,6 @@ public class Main {
         GatewayServer gatewayServer = new GatewayServer();
         gatewayServer.start();
         LOGGER.info("Gateway server start success");
-        LOGGER.info("Root {}", ROOT_PATH);
     }
 }
 

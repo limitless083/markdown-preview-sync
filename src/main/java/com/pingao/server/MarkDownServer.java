@@ -1,6 +1,7 @@
 package com.pingao.server;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.pingao.model.WebSocketMsg;
 import com.pingao.utils.HtmlUtils;
 import io.netty.bootstrap.ServerBootstrap;
@@ -22,6 +23,8 @@ import java.util.List;
 
 public class MarkDownServer {
     private static final Logger LOGGER = LoggerFactory.getLogger(MarkDownServer.class);
+
+    private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
 
     private static MarkDownServer INSTANCE;
 
@@ -71,7 +74,8 @@ public class MarkDownServer {
 
     public void broadcast(String command, String path, List<String> content, int bottom) {
         WebSocketMsg msg = new WebSocketMsg(command, path, HtmlUtils.markdown2Html(content, bottom));
-        channelGroup.writeAndFlush(new TextWebSocketFrame(HtmlUtils.base64(new Gson().toJson(msg))));
+        String json = GSON.toJson(msg);
+        channelGroup.writeAndFlush(new TextWebSocketFrame(json));
         LOGGER.info("Broadcast bottom {} msg {} success", bottom, msg);
     }
 

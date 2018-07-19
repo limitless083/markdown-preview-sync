@@ -13,10 +13,7 @@ import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import static io.netty.handler.codec.http.HttpResponseStatus.OK;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
@@ -47,9 +44,9 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
     private void responseStaticFile(ChannelHandlerContext ctx, FullHttpRequest request) {
         String path = Main.ROOT_PATH + HtmlUtils.getRequestPath(request.uri());
         try {
-            response(ctx, request, new String(Files.readAllBytes(Paths.get(path))),
+            response(ctx, request, HtmlUtils.readContentAsString(path),
                      HtmlUtils.getMiMeTypeOfStaticFile(path));
-        } catch (IOException e) {
+        } catch (Exception e) {
             LOGGER.error("Error occurs on response static file {}", path, e);
             error(ctx, HttpResponseStatus.NOT_FOUND);
         }

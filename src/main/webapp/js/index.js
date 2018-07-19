@@ -56,7 +56,7 @@ $(function () {
 
         ws.onmessage = function (d) {
             console.log('Response length: ' + d.data.length);
-            var data = JSON.parse(Base64.decode(d.data));
+            var data = JSON.parse(d.data);
             if ($('#path').val() === '') {
                 init(data);
             } else {
