@@ -323,7 +323,11 @@ public class HtmlUtils {
         Node document = PARSER.parse(sb.toString());
         String html = RENDERER.render(document);
         int index = html.indexOf(MARKER);
-        return html.substring(0, index) + MARKER_HTML + html.substring(index + MARKER.length());
+        if (index >= 0) {
+            return html.substring(0, index) + MARKER_HTML + html.substring(index + MARKER.length());
+        } else {
+            return html;
+        }
     }
 
     public static List<String> buildContentLines(String content) {
