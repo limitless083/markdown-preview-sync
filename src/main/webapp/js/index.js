@@ -36,8 +36,6 @@ $(function () {
                     if (i < old_len) {
                         old_ele = old_html[i];
                         if (old_ele.outerHTML !== new_ele.outerHTML) {
-                            console.log('old:' + old_ele.outerHTML);
-                            console.log('new:' + new_ele.outerHTML);
                             child = $(children[i]);
                             child.replaceWith($(new_ele).clone());
 
@@ -66,10 +64,8 @@ $(function () {
                         old_ele = old_html[j];
                         new_ele = new_html[j];
                         if (old_ele.outerHTML !== new_ele.outerHTML) {
-                            console.log('old:' + old_ele.outerHTML);
-                            console.log('new:' + new_ele.outerHTML);
-
                             $(children[j]).replaceWith($(new_ele).clone());
+
                             if (new_ele.outerHTML.indexOf('$') > -1) {
                                 formula_id = 'formula-' + j;
                                 child.attr('id', formula_id);
