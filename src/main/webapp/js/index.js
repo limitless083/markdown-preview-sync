@@ -21,7 +21,7 @@ $(function () {
         var new_html = $(html_string).not('text');
 
         if (old_html === null) {
-            $('.markdown-body').html(new_html);
+            $('.markdown-body').html(html_string);
         } else {
             var children = $('.markdown-body').children();
             var old_len = old_html.length;
