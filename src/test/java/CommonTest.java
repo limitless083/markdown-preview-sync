@@ -1,12 +1,26 @@
 import com.pingao.Main;
 import com.pingao.utils.HtmlUtils;
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
  * Created by pingao on 2018/7/19.
  */
 public class CommonTest {
+    @Test
+    public void testCommon() {
+        List<String> list = Arrays.asList("a", "b");
+        Assert.assertEquals(list.subList(0, 0).size(), 0);
+    }
+
+    @Test
+    public void testSplitLines() {
+    }
+
     @Test
     public void testHtml() {
         //System.out.println("aa".substring(0, 0).equals(""));
