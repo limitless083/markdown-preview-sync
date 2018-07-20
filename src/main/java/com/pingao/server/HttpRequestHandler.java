@@ -1,8 +1,8 @@
 package com.pingao.server;
 
 import com.pingao.Main;
+import com.pingao.enums.MiMeType;
 import com.pingao.utils.HtmlUtils;
-import com.pingao.utils.MiMeType;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;

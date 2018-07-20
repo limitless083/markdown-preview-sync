@@ -1,4 +1,4 @@
-package com.pingao.utils;
+package com.pingao.enums;
 
 /**
  * Created by pingao on 2018/7/13.
