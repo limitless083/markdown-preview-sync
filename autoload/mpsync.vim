@@ -1,5 +1,3 @@
-echo "Loading"
-
 if !has("python")
     echo "vim has to be compiled with +python to run this"
     finish
@@ -12,6 +10,7 @@ endif
 let g:markdown_preview_sync_loaded = 1
 let g:markdown_preview_sync_port = 7788
 let g:markdown_preview_sync_chrome = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+let g:markdown_preview_sync_ie = "C:\\Program Files (x86)\\Internet Explorer\\iexplore.exe"
 
 let s:plugin_root_dir = fnamemodify(resolve(expand("<sfile>:p")), ":h")
 
@@ -39,7 +38,13 @@ function! s:is_start()
 endfunction
 
 function! s:open()
-    execute "silent !start " . g:markdown_preview_sync_chrome . " http://127.0.0.1:" . g:markdown_preview_sync_port . "/index"
+    if exists("g:markdown_preview_sync_chrome")
+        execute "silent !start " . g:markdown_preview_sync_chrome . " http://127.0.0.1:" . g:markdown_preview_sync_port . "/index"
+    elseif exists("g:markdown_preview_sync_ie")
+        execute "silent !start " . g:markdown_preview_sync_ie . " http://127.0.0.1:" . g:markdown_preview_sync_port . "/index"
+    else
+        echom "not set browser path"
+    endif
 endfunction
 
 function! s:sync()
@@ -68,8 +73,8 @@ endfunction
 function! s:autocmd()
     augroup markdown_preview_sync
         autocmd!
-        autocmd CursorMoved,CursorMovedI <buffer> :call s:sync()
-        autocmd VimLeave * call s:trigger_stop()
+        autocmd cursormoved,cursormovedi <buffer> call s:sync()
+        autocmd vimleave * call s:trigger_stop()
     augroup end
 endfunction
 
@@ -84,6 +89,7 @@ function! mpsync#preview()
         let g:markdown_preview_sync_start = 1
     endif
     call s:open()
+    call s:sync()
     call s:autocmd()
 endfunction
 
