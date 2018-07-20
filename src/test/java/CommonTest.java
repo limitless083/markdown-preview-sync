@@ -1,4 +1,3 @@
-import com.pingao.Main;
 import com.pingao.utils.HtmlUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -35,7 +34,7 @@ public class CommonTest {
         //System.out.println(HtmlUtils.buildContentLines("    \naaa\nbb"));
         //System.out.println(HtmlUtils.buildContentLines("    \naaa\n\nbb"));
         //System.out.println(HtmlUtils.buildIndexHtml());
-        //System.out.println(HtmlUtils.markdown2Html(HtmlUtils.buildContentLines(HtmlUtils.TEST_MD_LONG), 22));
+        System.out.println(HtmlUtils.markdown2Html(HtmlUtils.buildContentLines(HtmlUtils.TEST_MD), 22));
         //System.out.println(Paths.get(ClassLoader.getSystemResource("").getFile()).getParent().toString());
         //System.out.println(ClassLoader.getSystemResource("").getPath().substring(1));
         //System.out.println(HtmlUtils.class.getResource("."));
@@ -43,6 +42,6 @@ public class CommonTest {
         //System.out.println(new Gson().toJson(new WebSocketMsg("command", "d:/path", "<a href='aaa'></a>")));
         //System.out.println(new GsonBuilder().disableHtmlEscaping().create().toJson(new WebSocketMsg("command", "d:/path", "<a href='aaa'></a>")));
         //System.out.println(Charset.defaultCharset());
-        System.out.println(HtmlUtils.readContentAsString(Main.ROOT_PATH + "/webapp/index.html"));
+        //System.out.println(HtmlUtils.readContentAsString(Main.ROOT_PATH + "/webapp/index.html"));
     }
 }
