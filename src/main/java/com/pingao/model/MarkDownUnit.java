@@ -18,4 +18,12 @@ public class MarkDownUnit {
         this.content = content;
         this.isMathJax = isMathJax;
     }
+
+    @Override
+    public String toString() {
+        return "MarkDownUnit[id=" + id +
+               ", operate=" + operate +
+               ", content=" + content +
+               ", isMathJax=" + isMathJax;
+    }
 }
