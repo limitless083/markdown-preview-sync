@@ -1,4 +1,9 @@
+import com.google.gson.Gson;
+import com.pingao.enums.Operate;
+import com.pingao.model.MarkDownUnit;
 import com.pingao.utils.HtmlUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -26,15 +31,17 @@ public class CommonTest {
         //System.out.println(HtmlUtils.markdown2Html(Arrays.asList("", "", "  ", ""), 3));
         //System.out.println(HtmlUtils.markdown2Html(Arrays.asList("aaa", "", "  ", "bbb"), 3));
         //System.out.println(HtmlUtils.markdown2Html(Arrays.asList("aaa", "", "  ", ""), 5));
-        //System.out.println(HtmlUtils.buildContentLines(""));
-        //System.out.println(HtmlUtils.buildContentLines("\n"));
-        //System.out.println(HtmlUtils.buildContentLines("    \n"));
-        //System.out.println(HtmlUtils.buildContentLines("    \n\n"));
-        //System.out.println(HtmlUtils.buildContentLines("    \naaa"));
-        //System.out.println(HtmlUtils.buildContentLines("    \naaa\nbb"));
-        //System.out.println(HtmlUtils.buildContentLines("    \naaa\n\nbb"));
+        //System.out.println(HtmlUtils.split2Lines(""));
+        //System.out.println(HtmlUtils.split2Lines("\n"));
+        //System.out.println(HtmlUtils.split2Lines("    \n"));
+        //System.out.println(HtmlUtils.split2Lines("    \n\n"));
+        //System.out.println(HtmlUtils.split2Lines("    \naaa"));
+        //System.out.println(HtmlUtils.split2Lines("    \naaa\nbb"));
+        //System.out.println(HtmlUtils.split2Lines("    \naaa\n\nbb"));
         //System.out.println(HtmlUtils.buildIndexHtml());
-        System.out.println(HtmlUtils.markdown2Html(HtmlUtils.buildContentLines(HtmlUtils.TEST_MD), 22));
+        String html = HtmlUtils.markdown2Html(HtmlUtils.split2Lines(HtmlUtils.TEST_MD), 22);
+        System.out.println();
+        Document document = Jsoup.parse(html);
         //System.out.println(Paths.get(ClassLoader.getSystemResource("").getFile()).getParent().toString());
         //System.out.println(ClassLoader.getSystemResource("").getPath().substring(1));
         //System.out.println(HtmlUtils.class.getResource("."));
@@ -42,6 +49,12 @@ public class CommonTest {
         //System.out.println(new Gson().toJson(new WebSocketMsg("command", "d:/path", "<a href='aaa'></a>")));
         //System.out.println(new GsonBuilder().disableHtmlEscaping().create().toJson(new WebSocketMsg("command", "d:/path", "<a href='aaa'></a>")));
         //System.out.println(Charset.defaultCharset());
-        //System.out.println(HtmlUtils.readContentAsString(Main.ROOT_PATH + "/webapp/index.html"));
+        //System.out.println(HtmlUtils.readAsString(Main.ROOT_PATH + "/webapp/index.html"));
+    }
+
+    @Test
+    public void testGson() {
+        Assert.assertEquals("{\"id\":\"id\",\"operate\":\"APPEND\",\"content\":\"content\",\"isMathJax\":1}",
+                            new Gson().toJson(new MarkDownUnit("id", Operate.APPEND, "content", 1)));
     }
 }

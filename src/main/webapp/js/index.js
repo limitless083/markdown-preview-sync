@@ -4,83 +4,33 @@ $(function () {
     var init = function (data) {
         $('title').html(data.path);
         $('#path').val(data.path);
-        refresh_content(data.content);
+        $('.markdown-body').html('');
+        markdown_refresh(data.units);
         highlight_code();
         scroll_if_possible();
-        MathJax.Hub.Queue(['Typeset', MathJax.Hub]);
     };
 
     var sync = function (data) {
-        refresh_content(data.content);
+        markdown_refresh(data.units);
         highlight_code();
         scroll_if_possible();
     };
 
-    var old_html = null;
-    var refresh_content = function (html_string) {
-        var new_html = $(html_string).not('text');
+    var markdown_refresh = function (units) {
+        $.each(units, function (i, e) {
 
-        if (old_html === null) {
-            $('.markdown-body').html(html_string);
-        } else {
-            var children = $('.markdown-body').children();
-            var old_len = old_html.length;
-            var new_len = new_html.length;
-            var old_ele = null;
-            var new_ele = null;
-            var child = null;
-            var formula_id = '';
-            if (new_len > old_len) {
-                for (var i = 0; i < new_len; i++) {
-                    new_ele = new_html[i];
-                    if (i < old_len) {
-                        old_ele = old_html[i];
-                        if (old_ele.outerHTML !== new_ele.outerHTML) {
-                            child = $(children[i]);
-                            child.replaceWith($(new_ele).clone());
-
-                            if (new_ele.outerHTML.indexOf('$') > -1) {
-                                formula_id = 'formula-' + i;
-                                child.attr('id', formula_id);
-                                MathJax.Hub.Queue(['Typeset', MathJax.Hub, formula_id]);
-                                child.removeAttr('id')
-                            }
-                        }
-                    } else {
-                        var new_child = $(new_ele).clone();
-                        $('.markdown-body').append(new_child);
-                        if (new_ele.outerHTML.indexOf('$') > -1) {
-                            formula_id = 'formula-' + i;
-                            new_child.attr('id', formula_id);
-                            MathJax.Hub.Queue(['Typeset', MathJax.Hub, formula_id]);
-                            new_child.removeAttr('id')
-                        }
-                    }
-                }
-            } else {
-                for (var j = 0; j < old_len; j++) {
-                    child = $(children[j]);
-                    if (j < new_len) {
-                        old_ele = old_html[j];
-                        new_ele = new_html[j];
-                        if (old_ele.outerHTML !== new_ele.outerHTML) {
-                            $(children[j]).replaceWith($(new_ele).clone());
-
-                            if (new_ele.outerHTML.indexOf('$') > -1) {
-                                formula_id = 'formula-' + j;
-                                child.attr('id', formula_id);
-                                MathJax.Hub.Queue(['Typeset', MathJax.Hub, formula_id]);
-                                child.removeAttr('id')
-                            }
-                        }
-                    } else {
-                        child.remove();
-                    }
-                }
+            if (e.operate === "REPLACE") {
+                $('#' + e.id).replaceWith(e.content);
+            } else if (e.operate === "APPEND") {
+                $('.markdown-body').append(e.content);
+            } else if (e.operate === "REMOVE") {
+                $('#' + e.id).remove();
             }
 
-        }
-        old_html = new_html;
+            if (e.isMathJax === 1) {
+                MathJax.Hub.Queue(['Typeset', MathJax.Hub, e.id]);
+            }
+        })
     };
 
     var close = function () {
@@ -121,7 +71,7 @@ $(function () {
         };
 
         ws.onmessage = function (d) {
-            console.log('Response length: ' + d.data.length);
+            console.log('Response : ' + d.data.length);
             var data = JSON.parse(d.data);
             if ($('#path').val() === '') {
                 init(data);

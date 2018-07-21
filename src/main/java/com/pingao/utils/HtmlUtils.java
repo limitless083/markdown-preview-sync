@@ -284,7 +284,7 @@ public class HtmlUtils {
         }
     }
 
-    public static String readContentAsString(String path) {
+    public static String readAsString(String path) {
         try {
             return Files.lines(Paths.get(path), Charset.forName("UTF-8")).collect(Collectors.joining("\n"));
         } catch (Exception e) {
@@ -330,7 +330,7 @@ public class HtmlUtils {
         }
     }
 
-    public static List<String> buildContentLines(String content) {
+    public static List<String> split2Lines(String content) {
         List<String> lines = new ArrayList<>();
         for (int i = 0, start = 0; i < content.length(); i++) {
             if (i == content.length() - 1) {

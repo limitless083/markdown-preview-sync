@@ -31,6 +31,6 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
     @Override
     public void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) {
         msg.retain();
-        server.broadcast("sync", "/test_path", HtmlUtils.buildContentLines(HtmlUtils.TEST_MD_LONG), Integer.parseInt(msg.text()));
+        server.broadcast("sync", "/test_path", HtmlUtils.split2Lines(HtmlUtils.TEST_MD_LONG), Integer.parseInt(msg.text()));
     }
 }
