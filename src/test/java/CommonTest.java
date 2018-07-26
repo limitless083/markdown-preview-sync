@@ -2,8 +2,6 @@ import com.google.gson.Gson;
 import com.pingao.enums.Operate;
 import com.pingao.model.MarkDownUnit;
 import com.pingao.utils.HtmlUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -39,9 +37,28 @@ public class CommonTest {
         //System.out.println(HtmlUtils.split2Lines("    \naaa\nbb"));
         //System.out.println(HtmlUtils.split2Lines("    \naaa\n\nbb"));
         //System.out.println(HtmlUtils.buildIndexHtml());
-        String html = HtmlUtils.markdown2Html(HtmlUtils.split2Lines(HtmlUtils.TEST_MD), 22);
-        System.out.println();
-        Document document = Jsoup.parse(html);
+        String md = "作为Vim和Markdown的双重粉丝一枚，一直在寻找一款好用的预览插件，功能不用太多，能在书写之余偶尔撇一下效果即可。偶然看到了Chrome一款插件[Markdown Viewer](https://chrome.google.com/webstore/detail/markdown-viewer/ckkdlimhmcjmikdlpkmbgfkaikojcbjk)，风格非常喜欢，遗憾的是不能与Vim同步，后来又发现一款Vim插件[markdown-preview.vim](https://github.com/iamcco/markdown-preview.vim)，但是我装了好几次，在我的机器上老是报错。碰巧会一点Vimscript，加之自己是爪哇岛岛民，干脆就用Java写一个吧。\n"
+                    + "\n"
+                    + "### 特性\n"
+                    + "\n"
+                    + "- 代码高亮\n"
+                    + "- MathJax\n"
+                    + "\n"
+                    + "### 安装准备\n"
+                    + "\n"
+                    + "- Jre8及以上\n"
+                    + "- Python的[py4j](https://www.py4j.org/)库\n"
+                    + "\n"
+                    + "### 安装方式\n"
+                    + "\n"
+                    + "#### pathogen插件安装\n"
+                    + "\n"
+                    + "```\n"
+                    + "git clone git@github.com:pingao777/markdown-preview-sync.git\n"
+                    + "```\n";
+        String html = HtmlUtils.markdown2Html(HtmlUtils.split2Lines(md), 19);
+        System.out.println(html);
+        //Document document = Jsoup.parse(html);
         //System.out.println(Paths.get(ClassLoader.getSystemResource("").getFile()).getParent().toString());
         //System.out.println(ClassLoader.getSystemResource("").getPath().substring(1));
         //System.out.println(HtmlUtils.class.getResource("."));

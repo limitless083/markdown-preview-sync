@@ -303,10 +303,7 @@ public class HtmlUtils {
 
             if (nu < lines.size()) {
                 if (nu == bottom) {
-                    if ("".equals(line.trim())
-                        || line.trim().startsWith("<!--")
-                        || line.trim().startsWith("```")
-                        || line.trim().startsWith("$$")) {
+                    if ("".equals(line.trim()) || isCommentOrBlock(line)) {
                         bottom++;
                     } else {
                         sb.append(MARKER);
@@ -315,7 +312,7 @@ public class HtmlUtils {
                 sb.append('\n');
             } else {
                 if (bottom >= lines.size()) {
-                    sb.append(MARKER);
+                    sb.append(isCommentOrBlock(line) ? '\n' + MARKER : MARKER);
                 }
             }
         }
@@ -328,6 +325,13 @@ public class HtmlUtils {
         } else {
             return html;
         }
+    }
+
+    private static boolean isCommentOrBlock(String line) {
+        String l = line.trim();
+        return l.startsWith("<!--")
+               || l.startsWith("```")
+               || l.startsWith("$$");
     }
 
     public static List<String> split2Lines(String content) {
