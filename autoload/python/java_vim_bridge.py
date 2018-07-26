@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-"""Comment here
+"""Bridge connect vim to java
 
 @author wocanmei
 @date 2018-07-15 17:56:25
 """
 
-from py4j.java_gateway import JavaGateway
 from py4j.java_collections import ListConverter
+from py4j.java_gateway import JavaGateway
 
 gateway = None
 server = None

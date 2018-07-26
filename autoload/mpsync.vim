@@ -9,8 +9,6 @@ endif
 
 let g:markdown_preview_sync_loaded = 1
 let g:markdown_preview_sync_port = 7788
-let g:markdown_preview_sync_chrome = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-let g:markdown_preview_sync_ie = "C:\\Program Files (x86)\\Internet Explorer\\iexplore.exe"
 
 let s:plugin_root_dir = fnamemodify(resolve(expand("<sfile>:p")), ":h")
 
@@ -39,11 +37,9 @@ endfunction
 
 function! s:open()
     if exists("g:markdown_preview_sync_chrome")
-        execute "silent !start " . g:markdown_preview_sync_chrome . " http://127.0.0.1:" . g:markdown_preview_sync_port . "/index"
-    elseif exists("g:markdown_preview_sync_ie")
-        execute "silent !start " . g:markdown_preview_sync_ie . " http://127.0.0.1:" . g:markdown_preview_sync_port . "/index"
+        execute "silent !start " . g:markdown_preview_sync_chrome . " --app=http://127.0.0.1:" . g:markdown_preview_sync_port . "/index"
     else
-        echom "not set browser path"
+        echoerr "Not set browser path"
     endif
 endfunction
 
@@ -73,9 +69,43 @@ endfunction
 function! s:autocmd()
     augroup markdown_preview_sync
         autocmd!
-        autocmd cursormoved,cursormovedi <buffer> call s:sync()
+        autocmd cursormoved,cursormovedi <buffer> call s:trigger_sync()
+        autocmd bufwrite <buffer> call s:sync()
         autocmd vimleave * call s:trigger_stop()
     augroup end
+endfunction
+
+let b:old_current = 0
+let b:old_bottom = 0
+let b:old_last = 0
+
+function! s:trigger_sync()
+    let l:new_current = line(".")
+    let l:new_bottom = line("w$")
+    let l:new_last = line("$")
+    if b:old_last ==# l:new_last
+        if b:old_bottom > l:new_bottom
+            if b:old_bottom - l:new_bottom >= 5
+                call s:sync()
+                let b:old_current = l:new_current
+                let b:old_bottom = l:new_bottom
+                let b:old_last = l:new_last
+            endif
+        elseif b:old_bottom < l:new_bottom
+            call s:sync()
+            let b:old_current = l:new_current
+            let b:old_bottom = l:new_bottom
+            let b:old_last = l:new_last
+        else
+        endif
+    else
+        call s:sync()
+        let b:old_current = l:new_current
+        let b:old_bottom = l:new_bottom
+        let b:old_last = l:new_last
+    endif
+
+
 endfunction
 
 function! s:trigger_stop()
@@ -89,7 +119,6 @@ function! mpsync#preview()
         let g:markdown_preview_sync_start = 1
     endif
     call s:open()
-    call s:sync()
     call s:autocmd()
 endfunction
 
