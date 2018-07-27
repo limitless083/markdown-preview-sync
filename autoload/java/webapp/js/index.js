@@ -68,6 +68,7 @@ $(function () {
 
         ws.onclose = function () {
             console.log('Disconnected');
+            close();
         };
 
         ws.onmessage = function (d) {

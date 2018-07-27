@@ -81,15 +81,21 @@ function! s:autocmd()
         autocmd!
         autocmd cursormoved,cursormovedi <buffer> call s:trigger_sync()
         autocmd bufwrite <buffer> call s:sync()
-        autocmd vimleave * call s:trigger_stop()
+        autocmd vimleave * call s:stop()
     augroup end
 endfunction
 
-let b:old_current = 0
-let b:old_bottom = 0
-let b:old_last = 0
-
 function! s:trigger_sync()
+    if !exists("b:old_current")
+        let b:old_current = 0
+    endif
+    if !exists("b:old_bottom ")
+        let b:old_bottom = 0
+    endif
+    if !exists("b:old_last ")
+        let b:old_last = 0
+    endif
+
     let l:new_current = line(".")
     let l:new_bottom = line("w$")
     let l:new_last = line("$")
@@ -116,11 +122,6 @@ function! s:trigger_sync()
     endif
 
 
-endfunction
-
-function! s:trigger_stop()
-    call s:close()
-    call s:stop()
 endfunction
 
 function! mpsync#preview()
