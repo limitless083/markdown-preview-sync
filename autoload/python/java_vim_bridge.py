@@ -12,11 +12,12 @@ gateway = None
 server = None
 
 
-def start(port):
+def start(port, theme):
     global gateway
     gateway = JavaGateway()
     global server
     server = gateway.jvm.com.pingao.server.MarkDownServer.getInstance()
+    server.setTheme(theme)
     server.start(port)
 
 

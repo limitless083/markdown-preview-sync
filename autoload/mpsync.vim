@@ -8,7 +8,14 @@ if exists("g:markdown_preview_sync_loaded")
 endif
 
 let g:markdown_preview_sync_loaded = 1
-let g:markdown_preview_sync_port = 7788
+
+if !exists("g:markdown_preview_sync_port")
+    let g:markdown_preview_sync_port = 7788
+endif
+
+if !exists("g:markdown_preview_sync_theme")
+    let g:markdown_preview_sync_theme = "github"
+endif
 
 let s:plugin_root_dir = fnamemodify(resolve(expand("<sfile>:p")), ":h")
 
@@ -27,7 +34,8 @@ function! s:start()
 
 python <<EOF
 port = vim.eval('g:markdown_preview_sync_port')
-java_vim_bridge.start(int(port))
+theme = vim.eval('g:markdown_preview_sync_theme')
+java_vim_bridge.start(int(port), theme)
 EOF
 endfunction
 
@@ -36,8 +44,10 @@ function! s:is_start()
 endfunction
 
 function! s:open()
-    if exists("g:markdown_preview_sync_chrome")
-        execute "silent !start " . g:markdown_preview_sync_chrome . " --app=http://127.0.0.1:" . g:markdown_preview_sync_port . "/index"
+    if exists("g:markdown_preview_sync_chrome_path")
+        execute "silent !start " . g:markdown_preview_sync_chrome_path . " --app=http://127.0.0.1:" . g:markdown_preview_sync_port . "/index"
+    elseif exists("g:markdown_preview_sync_firefox_path")
+        execute "silent !start " . g:markdown_preview_sync_firefox_path . " http://127.0.0.1:" . g:markdown_preview_sync_port . "/index"
     else
         echoerr "Not set browser path"
     endif
