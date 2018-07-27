@@ -57,7 +57,7 @@ autocmd filetype markdown nnoremap <S-F9> :MarkSyncClose<cr>
 
 ### Prerequisite
 
-- Jre8 or 
+- Jre8 or above
 - Python [py4j](https://www.py4j.org/) lib
 
 ### Installation
