@@ -22,6 +22,12 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpRequestHandler.class);
 
+    private MarkDownServer server;
+
+    public HttpRequestHandler(MarkDownServer server) {
+        this.server = server;
+    }
+
     @Override
     public void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) {
         String uri = request.uri();
@@ -38,7 +44,7 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
     }
 
     private void index(ChannelHandlerContext ctx, FullHttpRequest request) {
-        response(ctx, request, HtmlUtils.readAsString(Main.ROOT_PATH + "/webapp/index.html"), MiMeType.HTML);
+        response(ctx, request, HtmlUtils.readIndexHtml(server.getTheme()), MiMeType.HTML);
     }
 
     private void responseStaticFile(ChannelHandlerContext ctx, FullHttpRequest request) {

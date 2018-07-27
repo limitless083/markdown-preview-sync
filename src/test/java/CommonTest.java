@@ -36,7 +36,7 @@ public class CommonTest {
         //System.out.println(HtmlUtils.split2Lines("    \naaa"));
         //System.out.println(HtmlUtils.split2Lines("    \naaa\nbb"));
         //System.out.println(HtmlUtils.split2Lines("    \naaa\n\nbb"));
-        //System.out.println(HtmlUtils.buildIndexHtml());
+        //System.out.println(HtmlUtils.readIndexHtml());
         String md = "作为Vim和Markdown的双重粉丝一枚，一直在寻找一款好用的预览插件，功能不用太多，能在书写之余偶尔撇一下效果即可。偶然看到了Chrome一款插件[Markdown Viewer](https://chrome.google.com/webstore/detail/markdown-viewer/ckkdlimhmcjmikdlpkmbgfkaikojcbjk)，风格非常喜欢，遗憾的是不能与Vim同步，后来又发现一款Vim插件[markdown-preview.vim](https://github.com/iamcco/markdown-preview.vim)，但是我装了好几次，在我的机器上老是报错。碰巧会一点Vimscript，加之自己是爪哇岛岛民，干脆就用Java写一个吧。\n"
                     + "\n"
                     + "### 特性\n"

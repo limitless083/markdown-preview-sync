@@ -34,7 +34,10 @@ public class MarkDownServer {
         new DefaultChannelGroup(ImmediateEventExecutor.INSTANCE);
     private final EventLoopGroup group = new NioEventLoopGroup();
     private Channel channel;
+
     private boolean isRunning;
+
+    private String theme;
 
     public static MarkDownServer getInstance() {
         if (INSTANCE == null) {
@@ -44,6 +47,14 @@ public class MarkDownServer {
     }
 
     private MarkDownServer() {
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
     public ChannelFuture start(int port) {

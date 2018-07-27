@@ -1,5 +1,6 @@
 package com.pingao.utils;
 
+import com.pingao.Main;
 import com.pingao.enums.MiMeType;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.QueryStringDecoder;
@@ -282,6 +283,12 @@ public class HtmlUtils {
         } else {
             return MiMeType.PLAIN;
         }
+    }
+
+    public static String readIndexHtml(String theme) {
+        String html = readAsString(Main.ROOT_PATH + "/webapp/index.html");
+        int index = html.indexOf("${theme}");
+        return html.substring(0, index) + theme + html.substring(index + "${theme}".length());
     }
 
     public static String readAsString(String path) {
