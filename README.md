@@ -45,6 +45,8 @@ autocmd filetype markdown nnoremap <F9> :MarkSyncPreview<cr>
 autocmd filetype markdown nnoremap <S-F9> :MarkSyncClose<cr>
 ```
 
+最后，欢迎大家多多提意见和建议。
+
 ---
 
 ### Feature
@@ -90,3 +92,5 @@ let g:markdown_preview_sync_theme = "name"
 autocmd filetype markdown nnoremap <F9> :MarkSyncPreview<cr>
 autocmd filetype markdown nnoremap <S-F9> :MarkSyncClose<cr>
 ```
+
+Last but not least, comments and issues are welcome.
