@@ -45,7 +45,6 @@
 <body>
 <input type='hidden' id='path' value=''/>
 <article class='markdown-body'>
-    "C:\Program Files\Java\jdk1.8.0_66\bin\java" -ea -Didea.test.cyclic.buffer.size=1048576 "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2017.2.5\lib\idea_rt.jar=64798:C:\Program Files\JetBrains\IntelliJ IDEA 2017.2.5\bin" -Dfile.encoding=UTF-8 -classpath "C:\Program Files\JetBrains\IntelliJ IDEA 2017.2.5\lib\idea_rt.jar;C:\Program Files\JetBrains\IntelliJ IDEA 2017.2.5\plugins\junit\lib\junit-rt.jar;C:\Program Files\JetBrains\IntelliJ IDEA 2017.2.5\plugins\junit\lib\junit5-rt.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\deploy.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\javaws.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\jfxswt.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\management-agent.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\plugin.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\access-bridge-64.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\cldrdata.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\dnsns.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\jaccess.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\jfxrt.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\localedata.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\nashorn.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\sunec.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\sunjce_provider.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\sunmscapi.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\sunpkcs11.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\zipfs.jar;D:\project\markdown-preview-sync\target\test-classes;D:\project\markdown-preview-sync\target\classes;C:\Users\pingao.liu\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\pingao.liu\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\pingao.liu\.m2\repository\com\atlassian\commonmark\commonmark\0.11.0\commonmark-0.11.0.jar;C:\Users\pingao.liu\.m2\repository\com\atlassian\commonmark\commonmark-ext-gfm-tables\0.11.0\commonmark-ext-gfm-tables-0.11.0.jar;C:\Users\pingao.liu\.m2\repository\com\atlassian\commonmark\commonmark-ext-yaml-front-matter\0.11.0\commonmark-ext-yaml-front-matter-0.11.0.jar;C:\Users\pingao.liu\.m2\repository\io\netty\netty-all\4.1.12.Final\netty-all-4.1.12.Final.jar;C:\Users\pingao.liu\.m2\repository\com\google\code\gson\gson\2.8.0\gson-2.8.0.jar;C:\Users\pingao.liu\.m2\repository\org\slf4j\slf4j-api\1.7.21\slf4j-api-1.7.21.jar;C:\Users\pingao.liu\.m2\repository\org\slf4j\slf4j-log4j12\1.7.21\slf4j-log4j12-1.7.21.jar;C:\Users\pingao.liu\.m2\repository\log4j\log4j\1.2.17\log4j-1.2.17.jar;C:\Users\pingao.liu\.m2\repository\net\sf\py4j\py4j\0.10.7\py4j-0.10.7.jar;C:\Users\pingao.liu\.m2\repository\org\jsoup\jsoup\1.11.2\jsoup-1.11.2.jar" com.intellij.rt.execution.junit.JUnitStarter -ideVersion5 -junit4 CommonTest,testHtml
     <p>作为Vim粉丝一枚，一直在寻找一款好用的Markdown预览插件，功能要简单，能在书写之余偶尔撇一下效果即可，毕竟Markdown语法都烂熟于心了。先是偶然看到了Chrome一款插件<a href='https://chrome.google.com/webstore/detail/markdown-viewer/ckkdlimhmcjmikdlpkmbgfkaikojcbjk'>Markdown Viewer</a>，风格非常喜欢，遗憾的是不能与Vim同步，后来又发现一款Vim插件<a href='https://github.com/iamcco/markdown-preview.vim'>markdown-preview.vim</a>，但是我装了好几次，在我的机器上老是报错。故事本来到此就结束了，但是程序猿乞肯如此轻易屈服，程序猿要让这天，再遮不住我的眼，要这地，再埋不了我心，程序猿要用自己的双手开天辟地！经过程序猿在键盘上一顿猛干，<a href='https://github.com/pingao777/markdown-preview-sync'>markdown-preview-sync</a>横空出世了！哎呀累死我了，吹牛也挺费力气的。
     </p>
     <p>下面简单介绍下这款插件：</p>
@@ -63,27 +62,27 @@
     <h3>安装方式</h3>
     <p>如果你使用<a href='https://github.com/tpope/vim-pathogen'>pathogen</a>，可以运行如下命令：</p>
     <pre><code class='language-git'>
-        cd your-path-to-bundle
-        git clone git@github.com:pingao777/markdown-preview-sync.git
+cd your-path-to-bundle
+git clone git@github.com:pingao777/markdown-preview-sync.git
     </code></pre>
     <p>如果你没有使用任何插件管理工具，直接将/autoload和/plugin目录中的文件分别放在Vim的/autoload和/plugin目录即可。</p>
     <p>注：/src目录是项目源代码，如果不关注直接删掉就可以了。</p>
     <h3>设置</h3>
     <pre><code class='language-vim'>
-        &quot; Chrome和Firefox都可以，推荐使用Chrome
-        &quot; 可以这样设置Chrome路径
-        let g:markdown_preview_sync_chrome_path = &quot;&quot;
+&quot; Chrome和Firefox都可以，推荐使用Chrome
+&quot; 可以这样设置Chrome路径
+let g:markdown_preview_sync_chrome_path = &quot;&quot;
 
-        &quot; 设置Firefox浏览器路径
-        let g:markdown_preview_sync_firefox_path = &quot;&quot;
+&quot; 设置Firefox浏览器路径
+let g:markdown_preview_sync_firefox_path = &quot;&quot;
 
-        &quot; (Optional)设置自定义CSS主题，将你的CSS文件放在autoload/java/webapp/css文件夹下，
-        &quot; 以“主题名-theme.css”方式命名，然后设置如下变量
-        let g:markdown_preview_sync_theme = &quot;主题名&quot;
+&quot; (Optional)设置自定义CSS主题，将你的CSS文件放在autoload/java/webapp/css文件夹下，
+&quot; 以“主题名-theme.css”方式命名，然后设置如下变量
+let g:markdown_preview_sync_theme = &quot;主题名&quot;
 
-        &quot; 配置快捷键
-        autocmd filetype markdown nnoremap &lt;F9&gt; :MarkSyncPreview&lt;cr&gt;
-        autocmd filetype markdown nnoremap &lt;S-F9&gt; :MarkSyncClose&lt;cr&gt;
+&quot; 配置快捷键
+autocmd filetype markdown nnoremap &lt;F9&gt; :MarkSyncPreview&lt;cr&gt;
+autocmd filetype markdown nnoremap &lt;S-F9&gt; :MarkSyncClose&lt;cr&gt;
     </code></pre>
     <hr/>
     <h3>Feature</h3>
@@ -100,28 +99,28 @@
     <h3>Installation</h3>
     <p>If you use <a href='https://github.com/tpope/vim-pathogen'>pathogen</a>, do this:</p>
     <pre><code class='language-git'>
-        cd your-path-to-bundle
-        git clone git@github.com:pingao777/markdown-preview-sync.git
+cd your-path-to-bundle
+git clone git@github.com:pingao777/markdown-preview-sync.git
     </code></pre>
     <p>If you don't use any plugin manager, just copy files in /autoload and /plugin to Vim's /autoload and /plugin directory.</p>
     <p>Note: /src directory is source code, you can simply delete it if you don't need it.</p>
     <h3>Setting</h3>
     <pre><code class='language-vim'>
-        &quot; Both Chrome and Firefox is good, but Chrome is prefer
-        &quot; Set Chrome path
-        let g:markdown_preview_sync_chrome_path = &quot;&quot;
+&quot; Both Chrome and Firefox is good, but Chrome is prefer
+&quot; Set Chrome path
+let g:markdown_preview_sync_chrome_path = &quot;&quot;
 
-        &quot; Set Firefox path
-        let g:markdown_preview_sync_firefox_path = &quot;&quot;
+&quot; Set Firefox path
+let g:markdown_preview_sync_firefox_path = &quot;&quot;
 
-        &quot; (Optional)Set your own css theme, put your css file in
-        &quot; autoload/java/webapp/css directory with a name: name-theme.css,
-        &quot; then set
-        let g:markdown_preview_sync_theme = &quot;name&quot;
+&quot; (Optional)Set your own css theme, put your css file in
+&quot; autoload/java/webapp/css directory with a name: name-theme.css,
+&quot; then set
+let g:markdown_preview_sync_theme = &quot;name&quot;
 
-        &quot; Set key
-        autocmd filetype markdown nnoremap &lt;F9&gt; :MarkSyncPreview&lt;cr&gt;
-        autocmd filetype markdown nnoremap &lt;S-F9&gt; :MarkSyncClose&lt;cr&gt;
+&quot; Set key
+autocmd filetype markdown nnoremap &lt;F9&gt; :MarkSyncPreview&lt;cr&gt;
+autocmd filetype markdown nnoremap &lt;S-F9&gt; :MarkSyncClose&lt;cr&gt;
     </code></pre>
 </article>
 </body>
