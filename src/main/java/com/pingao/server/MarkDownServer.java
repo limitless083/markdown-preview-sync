@@ -96,6 +96,7 @@ public class MarkDownServer {
 
     public static void main(String[] args) {
         final MarkDownServer endpoint = new MarkDownServer();
+        endpoint.setTheme("github");
         endpoint.start(7788);
         Runtime.getRuntime().addShutdownHook(new Thread(endpoint::destroy));
     }
