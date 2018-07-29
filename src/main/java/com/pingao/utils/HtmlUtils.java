@@ -2,6 +2,7 @@ package com.pingao.utils;
 
 import com.pingao.Main;
 import com.pingao.enums.MiMeType;
+import com.pingao.model.YamlSpan;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.QueryStringDecoder;
 import org.commonmark.Extension;
@@ -302,6 +303,8 @@ public class HtmlUtils {
 
     public static String markdown2Html(List<String> lines, int bottom) {
 
+        YamlSpan span = getYamlSpan(lines);
+
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
@@ -310,7 +313,7 @@ public class HtmlUtils {
 
             if (nu < lines.size()) {
                 if (nu == bottom) {
-                    if ("".equals(line.trim()) || isCommentOrBlock(line)) {
+                    if ("".equals(line.trim()) || isCommentOrBlock(line) || span.isInYaml(nu)) {
                         bottom++;
                     } else {
                         sb.append(MARKER);
@@ -319,7 +322,7 @@ public class HtmlUtils {
                 sb.append('\n');
             } else {
                 if (bottom >= lines.size()) {
-                    sb.append(isCommentOrBlock(line) ? '\n' + MARKER : MARKER);
+                    sb.append(isCommentOrBlock(line) || span.isInYaml(nu) ? '\n' + MARKER : MARKER);
                 }
             }
         }
@@ -332,6 +335,29 @@ public class HtmlUtils {
         } else {
             return html;
         }
+    }
+
+    private static YamlSpan getYamlSpan(List<String> lines) {
+        YamlSpan span = new YamlSpan();
+        if (lines.isEmpty()) {
+            span.setStart(0);
+            span.setEnd(0);
+        } else {
+            if ("---".equals(lines.get(0))) {
+                span.setStart(1);
+                for (int i = 1; i < lines.size(); i++) {
+                    if ("---".equals(lines.get(i))) {
+                        span.setEnd(i + 1);
+                        break;
+                    }
+                }
+            } else {
+                span.setStart(Integer.MAX_VALUE);
+                span.setEnd(Integer.MAX_VALUE);
+            }
+        }
+
+        return span;
     }
 
     private static boolean isCommentOrBlock(String line) {
