@@ -1,6 +1,7 @@
 package com.pingao.server;
 
 import com.pingao.utils.HtmlUtils;
+import com.pingao.utils.JsoupUtils;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -30,8 +31,7 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        MarkDownServer.HTML_CACHE.clear();
-        MarkDownServer.TOC_CACHE.clear();
+        JsoupUtils.clearCache();
         super.channelInactive(ctx);
     }
 
