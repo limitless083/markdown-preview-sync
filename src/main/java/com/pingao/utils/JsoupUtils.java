@@ -2,6 +2,7 @@ package com.pingao.utils;
 
 import com.pingao.enums.Operate;
 import com.pingao.model.MarkDownUnit;
+import com.pingao.server.MarkDownServer;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -9,7 +10,9 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -18,9 +21,6 @@ import java.util.*;
 public class JsoupUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(JsoupUtils.class);
 
-    private static final Map<String, List<String>> HTML_CACHE = new HashMap<>();
-    private static final Map<String, String> TOC_CACHE = new HashMap<>();
-
     private static final List<String> HEADING_TAGS = Arrays.asList("h1", "h2", "h3", "h4", "h5", "h6");
 
     // Prevent instance
@@ -28,7 +28,7 @@ public class JsoupUtils {
     }
 
     public static List<MarkDownUnit> diff(String path, String html) {
-        List<String> oldHtml = HTML_CACHE.get(path);
+        List<String> oldHtml = MarkDownServer.HTML_CACHE.get(path);
 
         Document document = Jsoup.parse(html);
         Elements elements = document.body().children();
@@ -45,7 +45,7 @@ public class JsoupUtils {
                 oldHtml.add(content);
                 units.add(new MarkDownUnit(id, Operate.APPEND, content, isMathJax(content)));
             }
-            HTML_CACHE.put(path, oldHtml);
+            MarkDownServer.HTML_CACHE.put(path, oldHtml);
         } else {
             int min = Math.min(oldHtml.size(), elements.size());
             int max = Math.max(oldHtml.size(), elements.size());
@@ -80,7 +80,7 @@ public class JsoupUtils {
         }
 
         if (isTocEnable(elements)) {
-            String oldToc = TOC_CACHE.get(path);
+            String oldToc = MarkDownServer.TOC_CACHE.get(path);
             String newToc = buildToc(elements);
             if (oldToc == null) {
                 units.add(new MarkDownUnit("toc_container", Operate.REPLACE, newToc, 0));
@@ -90,11 +90,11 @@ public class JsoupUtils {
                     units.add(new MarkDownUnit("toc_container", Operate.REPLACE, newToc, 0));
                 }
             }
-            TOC_CACHE.put(path, newToc);
+            MarkDownServer.TOC_CACHE.put(path, newToc);
             //
         } else {
             units.add(new MarkDownUnit("toc_container", Operate.REMOVE, "", 0));
-            TOC_CACHE.remove(path);
+            MarkDownServer.TOC_CACHE.remove(path);
         }
 
         return units;

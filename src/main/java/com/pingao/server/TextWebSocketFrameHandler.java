@@ -29,6 +29,13 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
     }
 
     @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        MarkDownServer.HTML_CACHE.clear();
+        MarkDownServer.TOC_CACHE.clear();
+        super.channelInactive(ctx);
+    }
+
+    @Override
     public void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) {
         msg.retain();
         server.broadcast("sync", "/test_path", HtmlUtils.split2Lines(HtmlUtils.TEST_MD_LONG), Integer.parseInt(msg.text()));

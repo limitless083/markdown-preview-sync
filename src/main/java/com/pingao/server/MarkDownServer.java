@@ -20,11 +20,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class MarkDownServer {
     private static final Logger LOGGER = LoggerFactory.getLogger(MarkDownServer.class);
+
+    public static final Map<String, List<String>> HTML_CACHE = new HashMap<>();
+    public static final Map<String, String> TOC_CACHE = new HashMap<>();
 
     private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
 
