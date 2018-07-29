@@ -48,10 +48,8 @@ $(function () {
     };
 
     var close = function () {
-        // window.opener = null;
-        // window.open('', '_self');
-        // window.close();
-        window.location.href="about:blank";
+        window.opener = null;
+        window.open('', '_self');
         window.close();
     };
 
