@@ -112,7 +112,11 @@ function! s:trigger_sync()
             let b:old_current = l:new_current
             let b:old_bottom = l:new_bottom
             let b:old_last = l:new_last
-        else
+        elseif b:old_current != l:new_current
+            call s:sync()
+            let b:old_current = l:new_current
+            let b:old_bottom = l:new_bottom
+            let b:old_last = l:new_last
         endif
     else
         call s:sync()
