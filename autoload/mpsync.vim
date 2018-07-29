@@ -57,8 +57,12 @@ function! s:sync()
 python <<EOF
 path = vim.eval('expand("%:p")')
 lines = vim.eval('getline(1, line("$"))')
-bottom = vim.eval('line("w$")')
-java_vim_bridge.sync(path, lines, int(bottom))
+current = int(vim.eval('line(".")'))
+if current == 1:
+    java_vim_bridge.sync(path, lines, 1)
+else:
+    bottom = int(vim.eval('line("w$")'))
+    java_vim_bridge.sync(path, lines, bottom)
 EOF
 endfunction
 
