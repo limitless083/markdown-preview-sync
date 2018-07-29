@@ -2,6 +2,10 @@
 
 作为Vim粉丝一枚，一直在寻找一款好用的Markdown预览插件，功能要简单，能在书写之余偶尔撇一下效果即可，毕竟Markdown语法都烂熟于心了。先是偶然看到了Chrome一款插件[Markdown Viewer](https://chrome.google.com/webstore/detail/markdown-viewer/ckkdlimhmcjmikdlpkmbgfkaikojcbjk)，风格非常喜欢，遗憾的是不能与Vim同步，后来又发现一款Vim插件[markdown-preview.vim](https://github.com/iamcco/markdown-preview.vim)，但是我装了好几次，在我的机器上老是报错。故事本来到此就结束了，但是程序猿乞肯如此轻易屈服，程序猿要让这天，再遮不住眼，要这地，再埋不了心，程序猿要用自己的双手开天辟地！经过程序猿在键盘上一顿猛干，[markdown-preview-sync](https://github.com/pingao777/markdown-preview-sync)横空出世了！好了，就吹到这吧。
 
+运行效果如下：
+
+![效果图](http://ozgrgjwvp.bkt.clouddn.com/markdown-preview-sync/mpsync-snapshot.png)
+
 下面简单介绍下这款插件：
 
 ### 特性
@@ -100,7 +104,3 @@ autocmd filetype markdown nnoremap <S-F9> :MarkSyncClose<cr>
 ```
 
 Last but not least, comments and issues are welcome.
-
-![效果图](http://ozgrgjwvp.bkt.clouddn.com/markdown-preview-sync/mpsync-ch.png)
-
-![snapshot](http://ozgrgjwvp.bkt.clouddn.com/markdown-preview-sync/mpsync-en.png)
