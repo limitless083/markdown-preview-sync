@@ -7,6 +7,8 @@
 - 代码高亮
 - MathJax
 - 自定义CSS
+- GFM-TABLE
+- 目录TOC
 
 ### 安装准备
 
@@ -54,6 +56,8 @@ autocmd filetype markdown nnoremap <S-F9> :MarkSyncClose<cr>
 - Code Highlight
 - MathJax
 - Custom CSS
+- GFM-TABLE
+- TOC
 
 ### Prerequisite
 

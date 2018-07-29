@@ -17,25 +17,41 @@ $(function () {
     };
 
     var markdown_refresh = function (units) {
-        $.each(units, function (i, e) {
+        $.each(units, function (i, u) {
 
-            if (e.operate === "REPLACE") {
-                $('#' + e.id).replaceWith(e.content);
-            } else if (e.operate === "APPEND") {
-                $('.markdown-body').append(e.content);
-            } else if (e.operate === "REMOVE") {
-                $('#' + e.id).remove();
+            if (u.operate === 'REPLACE') {
+                if (u.id === 'toc_container') {
+                    $('.markdown-body').css('padding-left', '200px');
+                    var toc = $('#' + u.id);
+                    toc.html(u.content);
+                    toc.show();
+                } else {
+                    $('#' + u.id).replaceWith(u.content);
+                }
+            } else if (u.operate === 'APPEND') {
+                $('.markdown-body').append(u.content);
+            } else if (u.operate === 'REMOVE') {
+                if (u.id === 'toc_container') {
+                    $('.markdown-body').css('padding-left', '45px');
+                    var cot = $('#' + u.id);
+                    cot.html('');
+                    cot.hide();
+                } else {
+                    $('#' + u.id).remove();
+                }
             }
 
-            if (e.isMathJax === 1) {
-                MathJax.Hub.Queue(['Typeset', MathJax.Hub, e.id]);
+            if (u.isMathJax === 1) {
+                MathJax.Hub.Queue(['Typeset', MathJax.Hub, u.id]);
             }
         })
     };
 
     var close = function () {
-        window.opener = null;
-        window.open('', '_self');
+        // window.opener = null;
+        // window.open('', '_self');
+        // window.close();
+        window.location.href="about:blank";
         window.close();
     };
 
@@ -74,10 +90,11 @@ $(function () {
         ws.onmessage = function (d) {
             console.log('Response : ' + d.data.length);
             var data = JSON.parse(d.data);
-            if ($('#path').val() === '') {
+            var path = $('#path');
+            if (path.val() === '') {
                 init(data);
             } else {
-                if ($('#path').val() === data.path) {
+                if (path.val() === data.path) {
                     if (data.command === 'close') {
                         close()
                     } else if (data.command === 'sync') {
