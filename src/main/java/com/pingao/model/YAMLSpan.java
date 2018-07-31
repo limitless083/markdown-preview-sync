@@ -3,7 +3,7 @@ package com.pingao.model;
 /**
  * Created by pingao on 2018/7/29.
  */
-public class YamlSpan {
+public class YAMLSpan {
     private int start;
     private int end;
 
@@ -23,7 +23,7 @@ public class YamlSpan {
         this.end = end;
     }
 
-    public boolean isInYaml(int line) {
+    public boolean isInYAML(int line) {
         return start <= line && line <= end;
     }
 }

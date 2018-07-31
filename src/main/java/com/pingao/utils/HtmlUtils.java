@@ -2,11 +2,10 @@ package com.pingao.utils;
 
 import com.pingao.Main;
 import com.pingao.enums.MiMeType;
-import com.pingao.model.YamlSpan;
+import com.pingao.model.YAMLSpan;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.QueryStringDecoder;
 import org.commonmark.Extension;
-import org.commonmark.ext.front.matter.YamlFrontMatterExtension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
@@ -18,7 +17,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,7 +30,7 @@ public class HtmlUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(HtmlUtils.class);
 
     private static final List<Extension> EXTENSIONS =
-        Arrays.asList(TablesExtension.create(), YamlFrontMatterExtension.create());
+        Collections.singletonList(TablesExtension.create());
     private static final Parser PARSER = Parser.builder().extensions(EXTENSIONS).build();
     private static final HtmlRenderer RENDERER = HtmlRenderer.builder().extensions(EXTENSIONS).build();
 
@@ -303,17 +302,23 @@ public class HtmlUtils {
 
     public static String markdown2Html(List<String> lines, int bottom) {
 
-        YamlSpan span = getYamlSpan(lines);
+        YAMLSpan span = scanYAML(lines);
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
             int nu = i + 1;
+
+            if (span.isInYAML(nu)) {
+                bottom++;
+                continue;
+            }
+
             sb.append(line);
 
             if (nu < lines.size()) {
                 if (nu == bottom) {
-                    if ("".equals(line.trim()) || isCommentOrBlock(line) || span.isInYaml(nu)) {
+                    if ("".equals(line.trim()) || isCommentOrBlock(line)) {
                         bottom++;
                     } else {
                         sb.append(MARKER);
@@ -322,7 +327,7 @@ public class HtmlUtils {
                 sb.append('\n');
             } else {
                 if (bottom >= lines.size()) {
-                    sb.append(isCommentOrBlock(line) || span.isInYaml(nu) ? '\n' + MARKER : MARKER);
+                    sb.append(isCommentOrBlock(line) ? '\n' + MARKER : MARKER);
                 }
             }
         }
@@ -337,8 +342,8 @@ public class HtmlUtils {
         }
     }
 
-    private static YamlSpan getYamlSpan(List<String> lines) {
-        YamlSpan span = new YamlSpan();
+    private static YAMLSpan scanYAML(List<String> lines) {
+        YAMLSpan span = new YAMLSpan();
         if (lines.isEmpty()) {
             span.setStart(0);
             span.setEnd(0);
@@ -352,8 +357,8 @@ public class HtmlUtils {
                     }
                 }
             } else {
-                span.setStart(Integer.MAX_VALUE);
-                span.setEnd(Integer.MAX_VALUE);
+                span.setStart(0);
+                span.setEnd(0);
             }
         }
 
